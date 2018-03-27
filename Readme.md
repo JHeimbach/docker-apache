@@ -27,9 +27,9 @@ The following env_vars are available
 |Envvar|Setting|Default|
 |---|---|---|
 |`APACHE_SITE_ADMIN`|`ServerAdmin`|webmaster@localhost|
-|`APACHE_SITE_NAME`|`ServerName`|$APACHE_SERVER_NAME|
+|`APACHE_SITE_NAME`|`ServerName`|`$APACHE_SERVER_NAME` (localhost)|
 |`APACHE_SITE_ROOT`|`DocumentRoot`|/var/www/html|
-|`APACHE_SITE_ALIASES`|`ServerAlias`|$APACHE_SITE_NAME|
+|`APACHE_SITE_ALIASES`|`ServerAlias`|`$APACHE_SITE_NAME` (localhost)|
 
 ## PHP Ready
 PHP-ready (just spin a php-fpm container up)
