@@ -21,7 +21,7 @@ The following env_vars are available
 |`APACHE_LOG_DIR`|apache log dir|/var/log/apache2|
 |`APACHE_SERVER_NAME`|ServerName|localhost|
 |`APACHE_CONF_SITE`|Virtual host settings|sites-enabled/site.conf|
-|`APACHE_CONF_CUSTOM`|Custom Apache Settings, included in apache2.conf|conf-enabled/custom.conf|
+|`APACHE_CONF_CUSTOM`|[Custom](conf.d/custom.conf) Apache Settings, included in apache2.conf|conf-enabled/custom.conf|
 
 ### Virtual Host settings
 |Envvar|Setting|Default|

@@ -10,7 +10,7 @@ RUN a2dissite 000-default && \
 
 
 ARG APACHE_SITE_CONF=sites-enabled/site.conf
-ARG APACHE_SITE_CONF_FILE=./conf.d/apache2.conf
+ARG APACHE_SITE_CONF_FILE=./conf.d/custom.conf
 
 ARG APACHE_CUSTOM_CONF=conf-enabled/custom.conf
 ARG APACHE_CUSTOM_CONF_FILE=./conf.d/site.conf
