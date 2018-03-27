@@ -8,7 +8,6 @@ RUN sed -i -e 's/#ServerRoot "\/etc\/apache2"/ServerRoot "\/etc\/apache2"/g' apa
 RUN a2dissite 000-default && \
     a2enmod rewrite socache_shmcb ssl proxy proxy_fcgi
 
-
 ARG APACHE_SITE_CONF=sites-enabled/site.conf
 ARG APACHE_SITE_CONF_FILE=./conf.d/custom.conf
 
@@ -17,7 +16,6 @@ ARG APACHE_CUSTOM_CONF_FILE=./conf.d/site.conf
 
 COPY $APACHE_CUSTOM_CONF_FILE $APACHE_CUSTOM_CONF
 COPY $APACHE_SITE_CONF_FILE $APACHE_SITE_CONF
-
 
 ENV APACHE_LOCK_DIR=/var/lock/apache2 \
     APACHE_PID_FILE=/var/run/apache2.pid \
@@ -32,6 +30,5 @@ ENV APACHE_LOCK_DIR=/var/lock/apache2 \
     APACHE_CONF_SITE=$APACHE_SITE_CONF \
     APACHE_CONF_CUSTOM=$APACHE_CUSTOM_CONF \
     PHP_SERVER=php
-
 
 CMD ["apachectl", "-d .", "-DFOREGROUND"]
