@@ -9,13 +9,17 @@ RUN a2dissite 000-default && \
     a2enmod rewrite socache_shmcb ssl proxy proxy_fcgi
 
 ARG APACHE_SITE_CONF=sites-enabled/site.conf
-ARG APACHE_SITE_CONF_FILE=./conf.d/custom.conf
+ARG APACHE_SITE_CONF_SSL=sites-enabled/site-ssl.conf
+
+ARG APACHE_SITE_CONF_FILE=./conf.d/site.conf
+ARG APACHE_SITE_CONF_SSL_FILE=./conf.d/site-ssl.conf
 
 ARG APACHE_CUSTOM_CONF=conf-enabled/custom.conf
-ARG APACHE_CUSTOM_CONF_FILE=./conf.d/site.conf
+ARG APACHE_CUSTOM_CONF_FILE=./conf.d/custom.conf
 
-COPY $APACHE_CUSTOM_CONF_FILE $APACHE_CUSTOM_CONF
 COPY $APACHE_SITE_CONF_FILE $APACHE_SITE_CONF
+COPY $APACHE_SITE_CONF_SSL_FILE $APACHE_SITE_CONF_SSL
+COPY $APACHE_CUSTOM_CONF_FILE $APACHE_CUSTOM_CONF
 
 ENV APACHE_LOCK_DIR=/var/lock/apache2 \
     APACHE_PID_FILE=/var/run/apache2.pid \
@@ -29,6 +33,9 @@ ENV APACHE_LOCK_DIR=/var/lock/apache2 \
     APACHE_SITE_ALIASES=$APACHE_SITE_NAME \
     APACHE_CONF_SITE=$APACHE_SITE_CONF \
     APACHE_CONF_CUSTOM=$APACHE_CUSTOM_CONF \
+    APACHE_SSL_ENGINE=On \
+    APACHE_SSL_CERT_FILE=/etc/apache/ssl/site.pem \
+    APACHE_SSL_KEY_FILE=/etc/apache/ssl/site.key \
     PHP_SERVER=php
 
 CMD ["apachectl", "-d .", "-DFOREGROUND"]
