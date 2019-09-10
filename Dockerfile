@@ -1,12 +1,16 @@
 FROM ubuntu:16.04
 
-RUN apt-get update && apt-get install -y apache2 curl
+RUN apt-get update
+RUN apt install software-properties-common -y
+RUN DEBIAN_FRONTEND=noninteractive LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/apache2 -y
+RUN apt-get update
+RUN apt install apache2 curl -y
 
 WORKDIR /etc/apache2
 RUN sed -i -e 's/#ServerRoot "\/etc\/apache2"/ServerRoot "\/etc\/apache2"/g' apache2.conf
 
 RUN a2dissite 000-default && \
-    a2enmod rewrite socache_shmcb ssl proxy proxy_fcgi
+    a2enmod rewrite socache_shmcb ssl proxy proxy_fcgi expires http2 headers
 
 ARG APACHE_SITE_CONF=sites-enabled/site.conf
 ARG APACHE_SITE_CONF_SSL=sites-enabled/site-ssl.conf
@@ -28,9 +32,9 @@ ENV APACHE_LOCK_DIR=/var/lock/apache2 \
     APACHE_LOG_DIR=/var/log/apache2 \
     APACHE_SERVER_NAME=localhost \
     APACHE_SITE_ADMIN=webmaster@localhost \
-    APACHE_SITE_NAME=$APACHE_SERVER_NAME \
+    APACHE_SITE_NAME=localhost \
     APACHE_SITE_ROOT=/var/www/html \
-    APACHE_SITE_ALIASES=$APACHE_SITE_NAME \
+    APACHE_SITE_ALIASES=localhost \
     APACHE_CONF_SITE=$APACHE_SITE_CONF \
     APACHE_CONF_CUSTOM=$APACHE_CUSTOM_CONF \
     APACHE_SSL_ENGINE=On \
@@ -38,4 +42,4 @@ ENV APACHE_LOCK_DIR=/var/lock/apache2 \
     APACHE_SSL_KEY_FILE=/etc/apache/ssl/site.key \
     PHP_SERVER=php
 
-CMD ["apachectl", "-d .", "-DFOREGROUND"]
+CMD apachectl -d . -DFOREGROUND

@@ -44,6 +44,8 @@ php-files are send via fast_cgi to another container with the Standardname `php`
 If you want to use ssl (https), copy cert and key to the machine and reference them with `APACHE_SSL_CERT_FILE` and `APACHE_SSL_KEY_FILE`
 OR provide the files via volumes
 
+or use docker secrets (v >1.25) and point them to `/etc/apache/ssl/site.pem` and `/etc/apache/ssl/site.key`
+
 ### example docker run 
 ```bash
   docker run \

@@ -1,0 +1,26 @@
+version: "3.5"
+services:
+  webserver:
+    image: jheimbach/apache:latest
+    secrets:
+      - source: cert.pem
+        target: /etc/apache/ssl/site.pem
+      - source: key.pem
+        target: /etc/apache/ssl/site.key
+    ports:
+      - 80
+      - 443
+    hostname: ${PROJECT}.local
+    environment:
+      APACHE_SERVER_NAME: ${PROJECT}
+      APACHE_SITE_NAME: ${PROJECT}
+      APACHE_SITE_ALIAS: ${PROJECT}.local
+      APACHE_SITE_ROOT: ${ROOT}
+
+
+
+secrets:
+  cert.pem:
+    file: ./tls/testapache.local.pem
+  key.pem:
+    file: ./tls/testapache.local-key.pem
